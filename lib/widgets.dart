@@ -7,7 +7,7 @@ class Widgets {
       {finished: false, bool disabled: false, int state: 1}) {
     return GestureDetector(
       onTap: () {
-        if (!disabled || finished) {
+        if (!disabled && !finished) {
           Navigator.push(
             context,
             MaterialPageRoute(
