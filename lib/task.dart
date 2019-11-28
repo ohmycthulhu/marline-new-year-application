@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets.dart';
+import 'bravo.dart';
+import 'code.dart';
 import 'package:circular_countdown/circular_countdown.dart';
 import 'dart:async';
 
@@ -13,8 +14,9 @@ class Task extends StatefulWidget {
 }
 
 class _TaskState extends State<Task> {
-  int seconds = 45;
+  int seconds = 5;
   int current = 1;
+  var timer;
 
   @override
   void initState() {
@@ -22,15 +24,36 @@ class _TaskState extends State<Task> {
     startTimer();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void startTimer() {
-    Timer.periodic(new Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(new Duration(seconds: 1), (timer) {
       if (current < seconds) {
         setState(() {
           current++;
         });
       } else {
         setState(() {
-          current = 1;
+          timer.cancel();
+          print('task.dart - state: ' + widget.state.toString());
+          if (widget.state < 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Bravo(state: widget.state + 1),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Code(),
+              ),
+            );
+          }
         });
       }
     });

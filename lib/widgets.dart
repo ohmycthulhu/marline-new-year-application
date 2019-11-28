@@ -11,7 +11,7 @@ class Widgets {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => (Task(asset: asset, state: ++state)),
+              builder: (context) => (Task(asset: asset, state: state)),
             ),
           );
         }

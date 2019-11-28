@@ -44,7 +44,7 @@ class _RegistrationState extends State<Registration> {
                       highlightColor: Color.fromRGBO(72, 229, 72, 1),
                       splashColor: Color.fromRGBO(72, 229, 72, 1),
                       padding: EdgeInsets.symmetric(
-                        vertical: 16,
+                        vertical: 14,
                         horizontal: 20,
                       ),
                       shape: RoundedRectangleBorder(
@@ -56,8 +56,10 @@ class _RegistrationState extends State<Registration> {
                       child: Text(
                         'Növbəti',
                         style: TextStyle(
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'ProximaBold',
                         ),
                       ),
                       onPressed: () => {

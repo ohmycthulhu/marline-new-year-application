@@ -32,6 +32,10 @@ flutter:
     - assets/images/checked.svg
     - assets/images/stars_grey.svg
     - assets/images/stars_yellow.svg
+    - assets/images/bravo.png
+    - assets/images/mad.gif
+    - assets/images/yayy.gif
+    - assets/images/clap.gif
 
   fonts:
     - family: ProximaBold
