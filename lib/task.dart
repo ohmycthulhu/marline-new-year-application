@@ -40,14 +40,14 @@ class _TaskState extends State<Task> {
           timer.cancel();
           print('task.dart - state: ' + widget.state.toString());
           if (widget.state < 3) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => Bravo(state: widget.state + 1),
               ),
             );
           } else {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => Code(),

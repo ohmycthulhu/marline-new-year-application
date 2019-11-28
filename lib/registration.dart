@@ -63,7 +63,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       onPressed: () => {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => Tasks(open: 1),

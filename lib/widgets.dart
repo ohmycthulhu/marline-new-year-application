@@ -115,4 +115,44 @@ class Widgets {
       ],
     );
   }
+
+  static Widget pinfield(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height * 0.1,
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: TextField(
+            obscureText: true,
+            textInputAction: TextInputAction.done,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.green,
+              focusColor: Colors.white,
+              hoverColor: Colors.white,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 20,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+            style: TextStyle(
+              fontSize: 28,
+              color: Colors.white,
+              letterSpacing: 10,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }

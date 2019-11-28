@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'tasks.dart';
+import 'widgets.dart';
 
 class Code extends StatefulWidget {
   final int state;
@@ -22,8 +23,6 @@ class _CodeState extends State<Code> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/greenbg.png"),
-
-            // "assets/images/" + widget.asset + "_bg.png"
             fit: BoxFit.cover,
           ),
         ),
@@ -45,57 +44,48 @@ class _CodeState extends State<Code> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                "SİZ BU TAPŞIRIĞIN\nÖHDƏSİNDƏN GƏLDİNİZ!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'ProximaBold',
-                ),
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.075,
-              child: RaisedButton(
-                color: Color.fromRGBO(72, 229, 72, 1),
-                textColor: Colors.white,
-                elevation: 20,
-                focusColor: Color.fromRGBO(72, 229, 72, 1),
-                highlightColor: Color.fromRGBO(72, 229, 72, 1),
-                splashColor: Color.fromRGBO(72, 229, 72, 1),
-                padding: EdgeInsets.symmetric(
-                  vertical: 14,
-                  horizontal: 20,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(6),
-                  side: BorderSide(
-                    color: Color.fromRGBO(72, 229, 72, 1),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  decoration: BoxDecoration(
+                    borderRadius: new BorderRadius.circular(12),
+                    color: Color.fromRGBO(55, 174, 12, 1),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 30),
+                        child: Text(
+                          "ŞİFRƏNİ DAXİL EDİN",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'ProximaBold',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 15),
+                        child: Text(
+                          "It is a long established fact that a\nreader will be distracted by the\nreadable content .",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'ProximaRegular',
+                          ),
+                        ),
+                      ),
+                      Widgets.pinfield(context),
+                    ],
                   ),
                 ),
-                child: Text(
-                  'Növbəti',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'ProximaBold',
-                  ),
-                ),
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Tasks(open: widget.state),
-                    ),
-                  ),
-                },
-              ),
+              ],
             ),
           ],
         ),
