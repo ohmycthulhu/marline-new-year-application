@@ -70,7 +70,7 @@ class _TasksState extends State<Tasks> {
                       'tree',
                       context,
                       state: widget.open,
-                      finished: widget.open == 1,
+                      finished: widget.open > 1,
                       disabled: widget.open < 1,
                     ),
                     Widgets.task(
@@ -79,7 +79,7 @@ class _TasksState extends State<Tasks> {
                       context,
                       state: widget.open,
                       finished: widget.open > 2,
-                      disabled: widget.open < 1,
+                      disabled: widget.open < 2,
                     ),
                     Widgets.task(
                       'Yenİ İl ağacını\nbəzəmək',

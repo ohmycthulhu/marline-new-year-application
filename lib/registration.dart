@@ -31,9 +31,8 @@ class _RegistrationState extends State<Registration> {
               width: MediaQuery.of(context).size.width * 0.8,
               child: Column(
                 children: <Widget>[
-                  Widgets.field('Ad', context),
-                  Widgets.field('Soyad', context),
-                  Widgets.field('Telefon', context),
+                  Widgets.field('Ad, Soyad', context),
+                  Widgets.field('Kod', context),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.8,
                     height: MediaQuery.of(context).size.height * 0.075,
