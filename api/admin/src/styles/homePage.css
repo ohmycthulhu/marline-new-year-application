@@ -1,0 +1,40 @@
+.type-name {
+    text-transform: capitalize;
+}
+.home-type-buttons {
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid grey;
+    transition: .3s ease;
+}
+.home-type-buttons:hover {
+    background-color: #90909030;
+}
+
+.task-body {
+    text-align: left;
+    border: 1px solid grey;
+    font-size: 1.1rem;
+}
+.task-name {
+
+}
+.task-status {
+
+}
+.task-duration {
+
+}
+.task-info {
+    text-transform: capitalize;
+    padding: .3rem 1rem;
+}
+.task-buttons {
+    border-top: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+

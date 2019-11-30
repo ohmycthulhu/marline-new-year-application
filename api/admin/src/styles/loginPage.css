@@ -1,0 +1,23 @@
+.login-page-holder {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page-body {
+    border: 1px solid grey;
+    padding: .5rem 1rem;
+}
+
+.login-page-input-holder {
+    margin: .5rem auto;
+}
+
+.login-page-buttons {
+    text-align: right;
+}
+
+.login-page-error {
+    color: red;
+}
