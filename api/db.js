@@ -81,6 +81,11 @@ const createUserQuery = `
   VALUES (?, ?, ?, ?)
 `;
 
+const getUsersQuery = `
+  SELECT * FROM users
+  ORDER BY id DESC;
+`;
+
 async function checkDatabase () {
   return new Promise((resolve, reject) => {
     // Start transaction
@@ -122,29 +127,25 @@ async function checkDatabase () {
   });
 }
 
-function getTypes () {
-  return new Promise(((resolve, reject) => {
-    connection.query(getTypesQuery, function (_, results, fields) {
-      fields = fields.map(f => f.name);
-      resolve(Object.values(results).map(row => fields.reduce((acc, name) =>
-        Object.assign(acc, { [name]: row[name]}), {})));
-    });
-  }));
+function _fetchRequest (query) {
+  return function () {
+    return new Promise(((resolve, reject) => {
+      connection.query(query, function (_, results, fields) {
+        fields = fields.map(f => f.name);
+        resolve(Object.values(results).map(row => fields.reduce((acc, name) =>
+          Object.assign(acc, {[name]: row[name]}), {})));
+      });
+    }));
+  }
 }
 
-function getTasks () {
-  return new Promise((resolve => {
-    connection.query(getTasksQuery, function (_, results, fields) {
-      fields = fields.map(f => f.name);
-      resolve(Object.values(results).map(row => fields.reduce((acc, name) =>
-        Object.assign(acc, { [name]: row[name]}), {})));
-    });
-  }));
-}
+const getTypes = _fetchRequest(getTypesQuery);
+const getTasks = _fetchRequest(getTasksQuery);
+const getUsers = _fetchRequest(getUsersQuery);
 
-function createUser({ name, lastName, phone, typeId }) {
+function createUser({ name, last_name, phone, type_id }) {
   return new Promise(((resolve) => {
-    connection.query(createUserQuery, [name, lastName, phone, typeId],
+    connection.query(createUserQuery, [name, last_name, phone, type_id],
       function (_, results) {
       resolve(!!results)
     });
@@ -155,5 +156,6 @@ module.exports = {
   checkDatabase,
   createUser,
   getTypes,
-  getTasks
+  getTasks,
+  getUsers
 };

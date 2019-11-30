@@ -1,10 +1,11 @@
 import React from 'react';
-import { Task, Type } from './HomePageTypes';
+import { Task, Type, User } from './HomePageTypes';
 import '../styles/homePage.css';
 
 export interface HomePageViewProps {
   types: Array<Type>,
   loading: boolean,
+  users: Array<User>,
   onStartTask: (type: Type, task: Task) => void,
   onEndTask: (type: Type, task: Task) => void,
   onClearTask: (type: Type, task: Task) => void,
@@ -75,6 +76,21 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
           </div>
         )
       });
+      const users = this.props.users.filter(user => user.type_id === type.id);
+      const usersRows = users.length ? users.map(user => (
+        <tr>
+          <td>{ user.id }</td>
+          <td>{ user.name }</td>
+          <td>{ user.last_name }</td>
+          <td>{ user.phone }</td>
+        </tr>
+        )) : (
+          <tr>
+            <th colSpan={4}>
+              Sorry, but there is no user yet
+            </th>
+          </tr>
+      )
       typeBody = (
         <div>
           <h4 className="type-name">
@@ -82,6 +98,20 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
           </h4>
           <div className="row tasks">
             { tasksBody }
+          </div>
+          <div className="users-holder">
+            <h4>
+              Users
+            </h4>
+            <table className="table">
+              <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Last Name</td>
+                <td>Phone</td>
+              </tr>
+              { usersRows }
+            </table>
           </div>
         </div>
       )

@@ -6,7 +6,7 @@ const app = express();
 const cors = require('cors');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const { getTypes, checkDatabase, createUser, getTasks } = require('./db');
+const { getTypes, getUsers, getTasks, checkDatabase, createUser } = require('./db');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
@@ -120,7 +120,9 @@ async function bootstrap () {
     res.send(data);
   });
 
-  app.get('/states/:type', async function (req, res) { });
+  app.get('/states/:type', async function (req, res) {
+    res.send(getTypeInfo(req.params.type));
+  });
 
   app.post('/states/:type/:task/start', async function (req, res) {
     if (!isLogged(req)) {
@@ -218,18 +220,24 @@ async function bootstrap () {
       return;
     }
 
-    const result = await createUser({ name, lastName: last_name, typeId: type.id, phone })
+    const user = { name, last_name: last_name, type_id: type.id, phone };
+    const result = await createUser(user);
     if (result) {
       res.send({
         status: 'success',
         message: 'User is successfully created'
-      })
+      });
+      io.emit('newUser', user);
     } else {
       res.send({
         status: 'error',
         message: 'Error on creating user'
       });
     }
+  });
+  app.get('/users', async function (req, res) {
+    const users = await getUsers();
+    res.send(users);
   });
 
   app.get('/login', (request, response) => {

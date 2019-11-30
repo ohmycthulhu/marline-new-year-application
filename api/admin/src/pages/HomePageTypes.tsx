@@ -11,3 +11,11 @@ export interface Type {
   name: string,
   tasks: Array<Task>
 }
+
+export interface User {
+  id: number,
+  name: string,
+  last_name: string,
+  phone: string,
+  type_id: number
+}

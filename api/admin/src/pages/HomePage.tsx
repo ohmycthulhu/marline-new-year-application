@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Task, Type} from './HomePageTypes';
+import {User, Task, Type} from './HomePageTypes';
 import HomePageView from "./HomePageView";
 import { subscribe } from '../helpers/socket';
 
@@ -14,6 +14,7 @@ interface TaskTimer {
 
 interface HomePageState {
   types: Array<Type>,
+  users: Array<User>,
   isLoading: boolean,
   timers: Array<TaskTimer>
 }
@@ -23,6 +24,7 @@ class HomePage extends React.Component<{}, HomePageState> {
   state = {
     types: exampleData,
     isLoading: false,
+    users: (Array<User>()),
     timers: []
   };
 
@@ -36,15 +38,32 @@ class HomePage extends React.Component<{}, HomePageState> {
 
   componentDidMount(): void {
     this.loadTypes();
+    this.loadUsers();
   }
 
   loadTypes(): void {
-    axios.get('states').then(response => {
+    axios.get('/states').then(response => {
       this.setState({
         types: response.data
       });
       this._subscribeToSocket(response.data);
     });
+  }
+
+  loadUsers(): void {
+    axios.get('/users').then(response => {
+      this.setState({
+        users: response.data
+      })
+      subscribe('newUser', (user: User) => {
+        this.setState({
+          users: [
+            user,
+            ...this.state.users
+          ]
+        })
+      })
+    })
   }
 
   _subscribeToSocket(types: Array<Type>) {
@@ -229,6 +248,7 @@ class HomePage extends React.Component<{}, HomePageState> {
         onStartTask={this.startTask}
         onEndTask={this.endTask}
         onClearTask={this.clearTask}
+        users={this.state.users}
       />
     )
   }
