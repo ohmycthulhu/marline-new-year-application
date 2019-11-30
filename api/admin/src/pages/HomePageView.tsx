@@ -37,15 +37,16 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
       </div>
     ));
     let typeBody = null;
-    if (this.state.selectedType !== null && !this.props.loading) {
+    const selectedType = this.state.selectedType || this.props.types[0];
+    if (selectedType && !this.props.loading) {
       // @ts-ignore
-      const type: Type = this.state.selectedType;
+      const type: Type = selectedType;
       const { name, tasks } = type;
       const tasksBody = tasks.map((task: Task) => {
         const status: string = task.status === 'end' ? 'Ended'
           : (typeof task.status !== 'number' ? 'Not started' : task.status + 's');
         return (
-          <div className="col-12 col-sm-6 col-md-4"
+          <div className="col-10 col-sm-6 col-md-4 offset-1 offset-sm-0"
                key={task.id}
           >
             <div className="task-body">
@@ -79,23 +80,22 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
       const users = this.props.users.filter(user => user.type_id === type.id);
       const usersRows = users.length ? users.map(user => (
         <tr>
-          <td>{ user.id }</td>
           <td>{ user.name }</td>
           <td>{ user.last_name }</td>
           <td>{ user.phone }</td>
         </tr>
         )) : (
           <tr>
-            <th colSpan={4}>
+            <th colSpan={3}>
               Sorry, but there is no user yet
             </th>
           </tr>
       )
       typeBody = (
         <div>
-          <h4 className="type-name">
+          <h3 className="type-name">
             { name }
-          </h4>
+          </h3>
           <div className="row tasks">
             { tasksBody }
           </div>
@@ -103,12 +103,11 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
             <h4>
               Users
             </h4>
-            <table className="table">
+            <table className="table table-hover table-striped">
               <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Last Name</td>
-                <td>Phone</td>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
               </tr>
               { usersRows }
             </table>
@@ -123,7 +122,7 @@ class HomePageView extends React.Component<HomePageViewProps, HomePageViewState>
       )
     }
     return (
-      <div className="container-fluid">
+      <div className="container home-page-body">
         { /* Types as buttons */ }
         <div className="row home-type-buttons-holder">
           { typesButtons }
