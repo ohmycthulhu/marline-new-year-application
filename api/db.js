@@ -52,14 +52,16 @@ const getTasksQuery = `
 const getTypeByCodeQuery = "SELECT * FROM types t WHERE t.code LIKE ?;";
 
 const types = [
-  { name: 'azercell', code: '1123' },
-  { name: 'bakcell', code: '5813' },
-  { name: 'nar', code: '2134' }
+  { name: 'Bakcell', code: '5813' },
+  { name: 'Nar', code: '7122' },
+  { name: 'Aztelecom/1', code: '2174' },
+  { name: 'Aztelecom/2', code: '2154' }
 ];
 
 const tasks = [
-  { name: 'first', duration: 30 },
-  { name: 'second', duration: 50 }
+  { name: 'First', duration: 30 },
+  { name: 'Second', duration: 50 },
+  { name: 'Third', duration: 120 },
 ];
 
 const fillTypesTable = `

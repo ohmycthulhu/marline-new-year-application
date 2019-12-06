@@ -121,7 +121,15 @@ async function bootstrap () {
   });
 
   app.get('/states/:type', async function (req, res) {
-    res.send(getTypeInfo(req.params.type));
+    const type = types.find(type => type.id.toString() === req.params.type.toString());
+    if (type) {
+      res.send(getTypeInfo(type));
+    } else {
+      res.send({
+        status: 'error',
+        message: 'Type not found'
+      });
+    }
   });
 
   app.post('/states/:type/:task/start', async function (req, res) {
@@ -225,6 +233,7 @@ async function bootstrap () {
     if (result) {
       res.send({
         status: 'success',
+        user,
         message: 'User is successfully created'
       });
       io.emit('newUser', user);
