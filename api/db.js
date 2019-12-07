@@ -1,9 +1,10 @@
 const mysql = require('mysql')
-
+const { database: dbConfig } = require('./config.json');
 const connection = mysql.createConnection({
-  user: 'user',
-  schema: 'nya',
-  database: 'nya'
+  user: dbConfig.user,
+  password: dbConfig.password,
+  database: dbConfig.database,
+  host: dbConfig.host
 });
 
 const createUsersTable = `

@@ -1,4 +1,5 @@
 'use strict';
+const config = require('./config');
 const Redis = require('ioredis');
 const Session = require("./session");
 const express = require('express');
@@ -14,8 +15,8 @@ const jwt = require('jsonwebtoken');
 const redis = new Redis();
 const rSubscriptions = new Redis();
 const adminCredentials = {
-  username: 'admin',
-  password: 'admin'
+  username: config.admin.username,
+  password: config.admin.password
 };
 const jwtPassword = 'EepugahCh9CheeCheiyu';
 
@@ -302,6 +303,6 @@ bootstrap().then(() => {
   console.log('Bootstrapped!')
 });
 
-http.listen(3333, function () {
-  console.log('Listening on :3000');
+http.listen(config.host.port, function () {
+  console.log(`Listening on :${config.host.port}`);
 });
