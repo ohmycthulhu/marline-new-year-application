@@ -42,11 +42,21 @@ class HomePage extends React.Component<{}, HomePageState> {
   }
 
   loadTypes(): void {
-    axios.get('/states').then(response => {
+    axios.get('/states').then(({ data: types }) => {
       this.setState({
-        types: response.data
+        types
       });
-      this._subscribeToSocket(response.data);
+      this._subscribeToSocket(types);
+
+      // Check for already started tasks
+      types.forEach((type: Type) => {
+        type.tasks.forEach((task: Task) => {
+          const status: null | string | number = task.status;
+          if (typeof status === 'number') {
+            this._startTask(type, task, status);
+          }
+        });
+      });
     });
   }
 
@@ -154,14 +164,14 @@ class HomePage extends React.Component<{}, HomePageState> {
     });
   }
 
-  _startTask (type: Type, task: Task): void {
+  _startTask (type: Type, task: Task, startTime: number = 0): void {
     const searchResults = this._findTask(type.id, task.id);
     if (!searchResults || this.state.timers.some((t: TaskTimer) => t.taskId === task.id && t.typeId === type.id)) {
       return;
     }
     const {typeIndex, taskIndex} = searchResults;
     const {duration: maxTime} = task;
-    let time = 0;
+    let time = startTime;
     const timer = setInterval(() => {
       time += 1;
       if (time >= maxTime) {
