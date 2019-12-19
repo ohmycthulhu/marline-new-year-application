@@ -1,0 +1,48 @@
+.home-page-body {
+    box-shadow: 0 0 3px 3px #88888860;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+.type-name {
+    text-transform: capitalize;
+}
+.home-type-buttons {
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid #44444444;
+    transition: .4s ease;
+}
+.home-type-buttons:hover {
+    background-color: #90909030;
+    box-shadow: 0 -2px 2px 2px grey;
+}
+.home-selected-type {
+    margin: 1rem auto;
+}
+.task-body {
+    text-align: left;
+    border: 1px solid #40404040;
+    font-size: 1.1rem;
+    margin: 1rem auto;
+    background-color: white;
+    transition: .3s ease-out;
+}
+.task-body:hover {
+    transform: scale(1.1);
+    z-index: 1;
+}
+.task-info {
+    text-transform: capitalize;
+    padding: .3rem 1rem;
+}
+.task-buttons {
+    border-top: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+.users-holder {
+    margin: 1rem auto;
+}
