@@ -6,7 +6,7 @@ import axios from 'axios';
 // @ts-ignore
 import Cookies from 'js-cookie/src/js.cookie';
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : 'http://192.168.1.13:3333';
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3333';
 
 axios.defaults.headers['TOKEN'] = Cookies.get('_token');
 

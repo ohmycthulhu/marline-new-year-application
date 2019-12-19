@@ -171,11 +171,12 @@ class HomePage extends React.Component<{}, HomePageState> {
     }
     const {typeIndex, taskIndex} = searchResults;
     const {duration: maxTime} = task;
+    console.log('Duration is ', maxTime);
     let time = startTime;
     const timer = setInterval(() => {
       time += 1;
       if (time >= maxTime) {
-        this.endTask(type, task);
+        this._endTask(type, task);
       } else {
         const types = this.state.types;
         types[typeIndex].tasks[taskIndex].status = time;
