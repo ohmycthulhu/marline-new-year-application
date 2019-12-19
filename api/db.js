@@ -32,12 +32,15 @@ const createTypesTable = `
 `;
 
 const createTasksTable = `
-  CREATE  TABLE
+  CREATE TABLE
         IF NOT EXISTS
         tasks (
             id INTEGER AUTO_INCREMENT,
             duration FLOAT NOT NULL,
             name VARCHAR (100) NOT NULL,
+            image_path VARCHAR(100) NOT NULL,
+            bg_path VARCHAR(100),
+            text TINYTEXT NOT NULL,
             PRIMARY KEY (id)
         );
 `;
@@ -60,9 +63,25 @@ const types = [
 ];
 
 const tasks = [
-  { name: 'First', duration: 900 },
-  { name: 'Second', duration: 900 },
-  { name: 'Third', duration: 9999 },
+  {
+    name: 'Ёлка',
+    duration: 900,
+    image_path: '/assets/tree.png',
+    bg_path: '/assets/tree_bg.png',
+    text: 'Bəzəkləri parıltılı bağlamada axtar!\nMasanın və oturacaqların altına diqqət yetir - dolab (şkafları) buraxma - mətbəxə bax - bəlkə resepşn və ya pəncərə tərəfdə?'
+  },
+  {
+    name: 'Пазлл',
+    duration: 900,
+    image_path: '/assets/puzzle.png',
+    text: 'Magnitin dəvətnamədə olduğunu xatırlayırsan?\nMagniti Yeni il pazlına yerləşdir. Şəkildə onun üçün yer tapmağa çalış!'
+  },
+  {
+    name: 'Лотерея',
+    duration: 9999,
+    image_path: 'lottery',
+    text: 'Lotoreyada iştirak et!\nŞanslı biletini lotereya barabanına qoymağı və hədiyyəni götürməyi unutma!'
+  },
 ];
 
 const fillTypesTable = `
@@ -74,9 +93,9 @@ const fillTypesTable = `
 
 const fillTasksTable = `
   INSERT INTO
-    tasks (name, duration)
+    tasks (name, duration, image_path, bg_path, text)
   VALUES
-    ${tasks.map(t => `( "${t.name}", ${t.duration} )`)}
+    ${tasks.map(t => `( "${t.name}", ${t.duration}, "${t.image_path}", ${t.bg_path ? `"${t.bg_path}"` : 'NULL'}, "${t.text}" )`)}
 `;
 
 const createUserQuery = `
