@@ -27,7 +27,7 @@ const createTypesTable = `
       types (
           id INTEGER AUTO_INCREMENT,
           name VARCHAR(100),
-          code VARCHAR(10) UNIQUE,
+          code VARCHAR(100) UNIQUE,
           PRIMARY KEY (id)
   )
   CHARACTER SET utf8
@@ -59,30 +59,32 @@ const getTasksQuery = `
 const getTypeByCodeQuery = "SELECT * FROM types t WHERE t.code LIKE ?;";
 
 const types = [
-  { name: 'Bakcell', code: '5813' },
-  { name: 'Nar', code: '7122' },
-  { name: 'Aztelecom/1', code: '2174' },
-  { name: 'Aztelecom/2', code: '2154' }
+  { name: 'Bakcell', code: 'bakcell' },
+  { name: 'Nar', code: 'nar' },
+  { name: 'Aztelecom/1', code: 'azerconnect-port' },
+  { name: 'Aztelecom/2', code: 'azerconnect' }
 ];
 
 const tasks = [
   {
     name: 'Tree',
     duration: 900,
-    image_path: '/assets/tree.png',
-    bg_path: '/assets/tree_bg.png',
+    image_path: 'assets/images/tree.png',
+    bg_path: 'assets/images/tree_bg.png',
     text: 'Bəzəkləri parıltılı bağlamada axtar!\nMasanın və oturacaqların altına diqqət yetir - dolab (şkafları) buraxma - mətbəxə bax - bəlkə resepşn və ya pəncərə tərəfdə?'
   },
   {
     name: 'Puzzle',
     duration: 900,
-    image_path: '/assets/puzzle.png',
+    image_path: 'assets/images/puzzle.png',
+    bg_path: 'assets/images/puzzle_bg.png',
     text: 'Magnitin dəvətnamədə olduğunu xatırlayırsan?\nMagniti Yeni il pazlına yerləşdir. Şəkildə onun üçün yer tapmağa çalış!'
   },
   {
     name: 'Lottery',
     duration: 9999,
-    image_path: 'lottery',
+    image_path: 'assets/images/lottery.png',
+    bg_path: 'assets/images/lottery_bg.png',
     text: 'Lotoreyada iştirak et!\nŞanslı biletini lotereya barabanına qoymağı və hədiyyəni götürməyi unutma!'
   },
 ];
