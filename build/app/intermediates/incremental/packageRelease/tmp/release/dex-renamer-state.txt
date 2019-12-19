@@ -1,0 +1,4 @@
+#Thu Nov 28 14:46:22 AZT 2019
+base.0=C\:\\Users\\frddl\\sources\\repos\\grinch\\build\\app\\intermediates\\transforms\\dexMerger\\release\\0
+path.0=classes.dex
+renamed.0=classes.dex
