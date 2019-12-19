@@ -17,6 +17,7 @@ const createUsersTable = `
      PRIMARY KEY(id),
      FOREIGN KEY (type_id) REFERENCES types(id)
   )
+  CHARACTER SET utf8
 
 `;
 
@@ -28,7 +29,8 @@ const createTypesTable = `
           name VARCHAR(100),
           code VARCHAR(10) UNIQUE,
           PRIMARY KEY (id)
-  );
+  )
+  CHARACTER SET utf8
 `;
 
 const createTasksTable = `
@@ -42,7 +44,8 @@ const createTasksTable = `
             bg_path VARCHAR(100),
             text TINYTEXT NOT NULL,
             PRIMARY KEY (id)
-        );
+        )
+  CHARACTER SET utf8
 `;
 
 const getTypesQuery = `
@@ -64,20 +67,20 @@ const types = [
 
 const tasks = [
   {
-    name: 'Ёлка',
+    name: 'Tree',
     duration: 900,
     image_path: '/assets/tree.png',
     bg_path: '/assets/tree_bg.png',
     text: 'Bəzəkləri parıltılı bağlamada axtar!\nMasanın və oturacaqların altına diqqət yetir - dolab (şkafları) buraxma - mətbəxə bax - bəlkə resepşn və ya pəncərə tərəfdə?'
   },
   {
-    name: 'Пазлл',
+    name: 'Puzzle',
     duration: 900,
     image_path: '/assets/puzzle.png',
     text: 'Magnitin dəvətnamədə olduğunu xatırlayırsan?\nMagniti Yeni il pazlına yerləşdir. Şəkildə onun üçün yer tapmağa çalış!'
   },
   {
-    name: 'Лотерея',
+    name: 'Lottery',
     duration: 9999,
     image_path: 'lottery',
     text: 'Lotoreyada iştirak et!\nŞanslı biletini lotereya barabanına qoymağı və hədiyyəni götürməyi unutma!'
