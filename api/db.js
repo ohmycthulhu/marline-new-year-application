@@ -67,7 +67,7 @@ const types = [
 
 const tasks = [
   {
-    name: 'Yeni il ağacını bəzəyin',
+    name: 'Yenİ İl ağacını bəzəyİn',
     duration: 900,
     image_path: 'assets/images/tree.png',
     bg_path: 'assets/images/tree_bg.png',
