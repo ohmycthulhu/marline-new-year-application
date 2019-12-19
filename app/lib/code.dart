@@ -59,7 +59,7 @@ class _CodeState extends State<Code> {
                       Padding(
                         padding: EdgeInsets.only(top: 30),
                         child: Text(
-                          "ŞİFRƏNİ DAXİL EDİN",
+                          "OK!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -72,7 +72,7 @@ class _CodeState extends State<Code> {
                       Padding(
                         padding: EdgeInsets.only(top: 10, bottom: 15),
                         child: Text(
-                          "It is a long established fact that a\nreader will be distracted by the\nreadable content .",
+                          "Deyəsən bacardın!\nŞənliyə başlamaq üçün gizli kodu daxil et!",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,

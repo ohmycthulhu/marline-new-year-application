@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grinch/api.dart';
+import 'package:grinch/bravo.dart';
+import 'package:grinch/code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -30,11 +32,19 @@ class _TasksState extends State<Tasks> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var typeId = prefs.getString('typeId');
     var data = await api.statesOfType(typeId);
-    setState(() {
-      tasks.clear();
-      tasks.addAll(json.decode(data.body)['tasks']);
-      initSocket(typeId);
-    });
+    var x = json.decode(data.body)['tasks'];
+    if (x[x.length - 1]['status'] != "end") {
+      setState(() {
+        tasks.clear();
+        tasks.addAll(json.decode(data.body)['tasks']);
+        initSocket(typeId);
+      });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Code()),
+      );
+    }
   }
 
   void initSocket(String typeId) {
@@ -42,6 +52,8 @@ class _TasksState extends State<Tasks> {
     socket.on('connect', (_) {
       print('connect');
     });
+
+    socket.clearListeners();
 
     for (var i = 0; i < tasks.length; i++) {
       var taskId = tasks[i]['id'];
@@ -66,23 +78,29 @@ class _TasksState extends State<Tasks> {
         tasks[taskId - 1]['finished'] = true;
         tasks[taskId - 1]['disabled'] = false;
       });
+
+      var page = taskId == 3 ? Code() : Bravo(state: 2);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => page),
+      );
     } else if (action == "clear") {
       setState(() {
         tasks[taskId - 1]['status'] = null;
         tasks[taskId - 1]['finished'] = false;
         tasks[taskId - 1]['disabled'] = true;
       });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Tasks(
+            open: 1,
+          ),
+        ),
+      );
     }
-
-    setState(() {});
-
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // var typeId = prefs.getString('typeId');
-    // var data = await api.statesOfType(typeId);
-    // setState(() {
-    //   tasks.clear();
-    //   tasks.addAll(json.decode(data.body)['tasks']);
-    // });
   }
 
   @override
@@ -146,8 +164,11 @@ class _TasksState extends State<Tasks> {
                       itemCount: tasks.length,
                       itemBuilder: (BuildContext ctxt, int index) {
                         return Widgets.task(
+                          tasks[index]['id'],
                           tasks[index]['name'],
+                          tasks[index]['text'],
                           tasks[index]['image_path'],
+                          tasks[index]['bg_path'],
                           context,
                           duration: int.tryParse(
                             tasks[index]['duration'].toString(),
@@ -155,7 +176,10 @@ class _TasksState extends State<Tasks> {
                           secondsLeft: (tasks[index]['status'] is String ||
                                   tasks[index]['status'] == null)
                               ? 0
-                              : tasks[index]['status'],
+                              : int.tryParse(
+                                    tasks[index]['duration'].toString(),
+                                  ) -
+                                  tasks[index]['status'],
                           state: tasks[index]['id'],
                           finished: tasks[index]['status'] == "end",
                           disabled: tasks[index]['status'] == null,

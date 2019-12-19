@@ -1,13 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:grinch/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'bravo.dart';
 import 'code.dart';
 import 'package:circular_countdown/circular_countdown.dart';
 import 'dart:async';
 
+ApiService api = ApiService();
+
 class Task extends StatefulWidget {
+  final int id;
   final int state;
   final String asset;
-  const Task({Key key, this.state, this.asset}) : super(key: key);
+  final String title;
+  final String text;
+  const Task({Key key, this.id, this.state, this.asset, this.title, this.text})
+      : super(key: key);
 
   @override
   _TaskState createState() => _TaskState();
@@ -21,12 +31,26 @@ class _TaskState extends State<Task> {
   @override
   void initState() {
     super.initState();
+    fetchData();
     startTimer();
   }
 
   @override
   void dispose() {
+    timer.cancel();
     super.dispose();
+  }
+
+  void fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var typeId = prefs.getString('typeId');
+    var data = await api.statesOfType(typeId);
+    var task = json.decode(data.body)['tasks'][widget.id - 1];
+
+    setState(() {
+      seconds = task['duration'];
+      current = task['status'].toInt();
+    });
   }
 
   void startTimer() {
@@ -68,9 +92,7 @@ class _TaskState extends State<Task> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/tree_bg.png"),
-
-            // "assets/images/" + widget.asset + "_bg.png"
+            image: AssetImage(widget.asset),
             fit: BoxFit.cover,
           ),
         ),
@@ -87,7 +109,7 @@ class _TaskState extends State<Task> {
                     height: MediaQuery.of(context).size.height * 0.3,
                   ),
                   Text(
-                    "Yeni il şam ağacını\nbəzəyin",
+                    widget.title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
@@ -100,7 +122,7 @@ class _TaskState extends State<Task> {
                     width: MediaQuery.of(context).size.width * 0.6,
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
-                      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+                      widget.text,
                       textAlign: TextAlign.center,
                       softWrap: true,
                       style: TextStyle(
@@ -121,7 +143,9 @@ class _TaskState extends State<Task> {
                       countdownRemainingColor: Colors.black,
                       strokeWidth: 3,
                       textSpan: TextSpan(
-                        text: (seconds - current).toString(),
+                        text: (seconds >= 1000)
+                            ? ''
+                            : (seconds - current).toString(),
                         style: TextStyle(
                           color: Color.fromRGBO(61, 209, 61, 1),
                           fontSize: 50,

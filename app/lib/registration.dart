@@ -208,7 +208,7 @@ class _RegistrationState extends State<Registration> {
         context: context,
         type: AlertType.error,
         title: "Xəta!",
-        desc: json.decode(res.body)['message'],
+        desc: "Yazılmış məlumatların doğruluğunu yoxlayın",
         buttons: [
           DialogButton(
             child: Text(

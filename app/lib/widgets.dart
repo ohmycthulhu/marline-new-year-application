@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 
 class Widgets {
-  static Widget task(String title, String asset, BuildContext context,
+  static Widget task(int id, String title, String text, String asset,
+      String bgasset, BuildContext context,
       {bool finished: false,
       bool disabled: false,
       int state: 1,
@@ -14,7 +15,13 @@ class Widgets {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => (Task(asset: asset, state: state)),
+              builder: (context) => (Task(
+                id: id,
+                asset: bgasset,
+                state: state,
+                title: title,
+                text: text,
+              )),
             ),
           );
         }
@@ -143,10 +150,6 @@ class Widgets {
                 horizontal: 20,
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.circular(6),
               ),
