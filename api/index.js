@@ -59,8 +59,12 @@ const getEvents = (type) => ({
 });
 
 io.on('connection', (socket) => {
-  socket.emit('greetings')
-})
+  console.log('New connection!');
+  socket.emit('greetings');
+  socket.on('disconnect', () => {
+    console.log('User disconnected')
+  });
+});
 
 const isLogged = ({ headers: { token }}) => {
   return jwt.decode(token, jwtPassword) === adminCredentials.password
