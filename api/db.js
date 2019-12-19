@@ -67,21 +67,21 @@ const types = [
 
 const tasks = [
   {
-    name: 'Tree',
+    name: 'Yeni il ağacını bəzəyin',
     duration: 900,
     image_path: 'assets/images/tree.png',
     bg_path: 'assets/images/tree_bg.png',
     text: 'Bəzəkləri parıltılı bağlamada axtar!\nMasanın və oturacaqların altına diqqət yetir - dolab (şkafları) buraxma - mətbəxə bax - bəlkə resepşn və ya pəncərə tərəfdə?'
   },
   {
-    name: 'Puzzle',
+    name: 'Pazl',
     duration: 900,
     image_path: 'assets/images/puzzle.png',
     bg_path: 'assets/images/puzzle_bg.png',
     text: 'Magnitin dəvətnamədə olduğunu xatırlayırsan?\nMagniti Yeni il pazlına yerləşdir. Şəkildə onun üçün yer tapmağa çalış!'
   },
   {
-    name: 'Lottery',
+    name: 'Lotoreya',
     duration: 9999,
     image_path: 'assets/images/lottery.png',
     bg_path: 'assets/images/lottery_bg.png',
