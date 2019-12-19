@@ -60,9 +60,9 @@ const types = [
 ];
 
 const tasks = [
-  { name: 'First', duration: 30 },
-  { name: 'Second', duration: 50 },
-  { name: 'Third', duration: 120 },
+  { name: 'First', duration: 900 },
+  { name: 'Second', duration: 900 },
+  { name: 'Third', duration: 9999 },
 ];
 
 const fillTypesTable = `
