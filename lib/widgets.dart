@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'task.dart';
 
 class Widgets {
@@ -55,9 +54,9 @@ class Widgets {
                     padding: EdgeInsets.only(top: 5),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: SvgPicture.asset(finished
-                          ? "assets/images/stars_yellow.svg"
-                          : "assets/images/stars_grey.svg"),
+                      child: Image.asset(finished
+                          ? "assets/images/stars_yellow.png"
+                          : "assets/images/stars_grey.png"),
                     ),
                   ),
                 ],
@@ -71,7 +70,7 @@ class Widgets {
                         padding: EdgeInsets.only(
                             right: MediaQuery.of(context).size.width * 0.1,
                             top: MediaQuery.of(context).size.width * 0.1 * 0.9),
-                        child: SvgPicture.asset("assets/images/checked.svg"),
+                        child: Image.asset("assets/images/checked.png"),
                       )
                     : Container(),
               ],

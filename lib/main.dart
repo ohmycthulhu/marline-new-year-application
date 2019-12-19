@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:grinch/tasks.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'registration.dart';
 
 void main() => runApp(MyApp());
@@ -27,7 +29,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+    handle();
+  }
+
+  void handle() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var typeId = prefs.getString('typeId');
+    if (typeId != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Tasks(open: 1),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:grinch/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+ApiService api = ApiService();
 
 class Tasks extends StatefulWidget {
   final int open;
@@ -10,6 +17,43 @@ class Tasks extends StatefulWidget {
 }
 
 class _TasksState extends State<Tasks> {
+  IO.Socket socket;
+  List tasks;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  void fetchData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var typeId = prefs.getString('typeId');
+    var data = await api.statesOfType(typeId);
+    setState(() {
+      tasks = json.decode(data.body)['tasks'];
+    });
+    initSocket(tasks, typeId);
+  }
+
+  void initSocket(List tasks, String typeId) {
+    socket = IO.io('http://ny.marline.agency');
+    socket.on('connect', (_) {
+      print('connect');
+    });
+
+    for (var i = 0; i < tasks.length; i++) {
+      var taskId = tasks[i]['id'];
+      socket.on('status:' + typeId + ':' + taskId.toString(),
+          (data) => handle(data, taskId));
+    }
+  }
+
+  void handle(String data, int taskId) {
+    print(taskId);
+    print(data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
