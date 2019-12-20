@@ -185,6 +185,7 @@ async function bootstrap () {
     }
   });
   app.post('/states/:type/:task/end', async function (req, res) {
+    console.log('Got end request');
     if (!isLogged(req)) {
       res.send({
         status: 'error',

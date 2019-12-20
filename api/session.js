@@ -34,6 +34,7 @@ class Session {
         this.onProgress(task, time, interval);
       }
       if (time >= maxTime) {
+	console.log('Stopping the time at ', time, maxTime);
         this.end(task);
       }
     }, interval * 1000)
