@@ -215,7 +215,8 @@ async function bootstrap () {
 
 
   app.post('/users', async function (req, res) {
-    const { name, phone, last_name, code } = req.body;
+    const { name, phone, last_name } = req.body;
+    const code = req.body.code.toLowerCase().trim();
     const type = types.find(t => t.code === code);
     if (!type) {
       res.send({
