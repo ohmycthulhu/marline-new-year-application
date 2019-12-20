@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["flutter|lib/material.dart","grinch|lib/api.dart","shared_preferences|lib/shared_preferences.dart","grinch|lib/widgets.dart","socket_io_client|lib/socket_io_client.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":["convert"],"hasMain":false}

@@ -1,0 +1,1 @@
+{"isEntrypoint":true,"deps":["flutter|lib/material.dart","grinch|lib/task.dart"],"parts":[],"conditionalDeps":[],"sdkDeps":[],"hasMain":false}

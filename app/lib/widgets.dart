@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 
 class Widgets {
-  static Widget task(String title, String asset, BuildContext context,
-      {finished: false, bool disabled: false, int state: 1}) {
+  static Widget task(int id, String title, String text, String asset,
+      String bgasset, BuildContext context,
+      {bool finished: false,
+      bool disabled: false,
+      int state: 1,
+      int duration: 0,
+      double secondsLeft: 0}) {
     return GestureDetector(
       onTap: () {
         if (!disabled && !finished) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => (Task(asset: asset, state: state)),
+              builder: (context) => (Task(
+                id: id,
+                asset: bgasset,
+                state: state,
+                title: title,
+                text: text,
+              )),
             ),
           );
         }
@@ -30,7 +41,7 @@ class Widgets {
                 image: (finished)
                     ? null
                     : DecorationImage(
-                        image: AssetImage("assets/images/" + asset + ".png"),
+                        image: AssetImage(asset),
                         fit: BoxFit.cover,
                       ),
               ),
@@ -70,7 +81,10 @@ class Widgets {
                         padding: EdgeInsets.only(
                             right: MediaQuery.of(context).size.width * 0.1,
                             top: MediaQuery.of(context).size.width * 0.1 * 0.9),
-                        child: Image.asset("assets/images/checked.png"),
+                        child: Image.asset(
+                          "assets/images/checked.png",
+                          width: MediaQuery.of(context).size.width * 0.175,
+                        ),
                       )
                     : Container(),
               ],
@@ -136,10 +150,6 @@ class Widgets {
                 horizontal: 20,
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.circular(6),
               ),

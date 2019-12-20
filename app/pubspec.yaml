@@ -34,6 +34,9 @@ flutter:
     - assets/images/tree.png
     - assets/images/tree_bg.png
     - assets/images/puzzle.png
+    - assets/images/puzzle_bg.png
+    - assets/images/lottery.png
+    - assets/images/lottery_bg.png
     - assets/images/checked.svg
     - assets/images/stars_grey.svg
     - assets/images/stars_yellow.svg

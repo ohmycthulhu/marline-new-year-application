@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grinch/api.dart';
+import 'package:grinch/bravo.dart';
+import 'package:grinch/code.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'widgets.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -18,7 +20,7 @@ class Tasks extends StatefulWidget {
 
 class _TasksState extends State<Tasks> {
   IO.Socket socket;
-  List tasks;
+  var tasks = List();
 
   @override
   void initState() {
@@ -30,17 +32,28 @@ class _TasksState extends State<Tasks> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var typeId = prefs.getString('typeId');
     var data = await api.statesOfType(typeId);
-    setState(() {
-      tasks = json.decode(data.body)['tasks'];
-    });
-    initSocket(tasks, typeId);
+    var x = json.decode(data.body)['tasks'];
+    if (x[x.length - 1]['status'] != "end") {
+      setState(() {
+        tasks.clear();
+        tasks.addAll(json.decode(data.body)['tasks']);
+        initSocket(typeId);
+      });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Code()),
+      );
+    }
   }
 
-  void initSocket(List tasks, String typeId) {
+  void initSocket(String typeId) {
     socket = IO.io('http://ny.marline.agency');
     socket.on('connect', (_) {
       print('connect');
     });
+
+    socket.clearListeners();
 
     for (var i = 0; i < tasks.length; i++) {
       var taskId = tasks[i]['id'];
@@ -49,9 +62,45 @@ class _TasksState extends State<Tasks> {
     }
   }
 
-  void handle(String data, int taskId) {
+  void handle(String action, int taskId) async {
     print(taskId);
-    print(data);
+    print(action);
+
+    if (action == "start") {
+      setState(() {
+        tasks[taskId - 1]['status'] = 0;
+        tasks[taskId - 1]['finished'] = false;
+        tasks[taskId - 1]['disabled'] = false;
+      });
+    } else if (action == "end") {
+      setState(() {
+        tasks[taskId - 1]['status'] = "end";
+        tasks[taskId - 1]['finished'] = true;
+        tasks[taskId - 1]['disabled'] = false;
+      });
+
+      var page = taskId == 3 ? Code() : Bravo(state: 2);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => page),
+      );
+    } else if (action == "clear") {
+      setState(() {
+        tasks[taskId - 1]['status'] = null;
+        tasks[taskId - 1]['finished'] = false;
+        tasks[taskId - 1]['disabled'] = true;
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Tasks(
+            open: 1,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -109,29 +158,33 @@ class _TasksState extends State<Tasks> {
                     Container(
                       height: 10,
                     ),
-                    Widgets.task(
-                      'Yenİ İl ağacını\nbəzəmək',
-                      'tree',
-                      context,
-                      state: widget.open,
-                      finished: widget.open > 1,
-                      disabled: widget.open < 1,
-                    ),
-                    Widgets.task(
-                      'Şəkİl parçalarını\ntamamlayın',
-                      'puzzle',
-                      context,
-                      state: widget.open,
-                      finished: widget.open > 2,
-                      disabled: widget.open < 2,
-                    ),
-                    Widgets.task(
-                      'Yenİ İl ağacını\nbəzəmək',
-                      'tree',
-                      context,
-                      state: widget.open,
-                      finished: widget.open > 3,
-                      disabled: widget.open < 3,
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: tasks.length,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return Widgets.task(
+                          tasks[index]['id'],
+                          tasks[index]['name'],
+                          tasks[index]['text'],
+                          tasks[index]['image_path'],
+                          tasks[index]['bg_path'],
+                          context,
+                          duration: int.tryParse(
+                            tasks[index]['duration'].toString(),
+                          ),
+                          secondsLeft: (tasks[index]['status'] is String ||
+                                  tasks[index]['status'] == null)
+                              ? 0
+                              : int.tryParse(
+                                    tasks[index]['duration'].toString(),
+                                  ) -
+                                  tasks[index]['status'],
+                          state: tasks[index]['id'],
+                          finished: tasks[index]['status'] == "end",
+                          disabled: tasks[index]['status'] == null,
+                        );
+                      },
                     ),
                   ],
                 ),
